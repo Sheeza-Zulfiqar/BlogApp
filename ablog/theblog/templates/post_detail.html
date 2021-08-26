@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--<h3>currentuser:{{ user.id}}&#45;&#45; authorofpost:{{ post.author.id}}</h3>-->
+
+        <h1 class='posttitle loader'>{{ post.title }}</h1>
+
+        {% if post.published_date %}
+            <div class="date postdate">
+                {{ post.published_date }}
+                 {% if user.is_authenticated %}
+                    {% if user.id == post.author.id %}
+                        <small> |
+                        <a href="{% url 'update_post' pk=post.pk %}">(Edit)</a>
+                        <a href="{% url 'delete_post' pk=post.pk %}">(Delete)</a>
+                        </small>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+        {% else %}
+            <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+        {% endif %}
+
+      <p class='postcontent' >{{ post.text|safe|linebreaksbr }}</p>
+
+
+
+
+
+
+  <hr>
+ <a class="btn btn-primary btn-comment" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+  <a class="btn btn-primary " href="{% url 'home' %}">Back</a>
+
+<br><br>
+<h3>All Comments</h3>
+<div class="container">
+
+
+  {% for comment in post.comments.all %}
+  <br>
+      {% if user.is_authenticated or comment.approved_comment %}
+            {{ comment.create_date }}
+
+            {% if user.id == post.author.id %}
+
+              {% if not comment.approved_comment %}
+                  <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+                  <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
+              {% endif %}
+            {% endif %}
+<!--    safe filter for html works fine-->
+          <p>{{ comment.text|safe|linebreaks }}</p>
+          <p>Posted by: <strong>{{ comment.author }}</strong></p>
+
+      {% endif %}
+  {% empty %}
+      <p>No comments posted.</p>
+  {% endfor %}
+</div>
+
+{% endblock %}
+

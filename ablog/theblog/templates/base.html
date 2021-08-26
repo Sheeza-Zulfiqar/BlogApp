@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>Blog Project</title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        {# MEDIUM STYLE EDITOR#}
+        <script src="//cdn.jsdelivr.net/medium-editor/latest/js/medium-editor.min.js"></script>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/medium-editor/latest/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+
+
+        {# Custom CSS#}
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+
+        {# Fonts#}
+        <link href="https://fonts.googleapis.com/css?family=Montserrat|Russo+One" rel="stylesheet">
+
+
+
+
+
+<body class='loader'>
+
+<!--techfont alow to edit font of the navbar-->
+  <nav class="navbar navbar-default techfont custom-navbar">
+    <div class="container">
+
+
+      <ul class="nav navbar-nav">
+        <li><a class='navbar-brand ' href="{% url 'home' %}">All Posts</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="https://www.github.com">Github</a></li>
+        <li><a href="https://www.linkedin.com">LinkedIn</a></li>
+ </ul>
+          <ul class="nav navbar-nav navbar-right">
+          {% if user.is_authenticated %}
+                <li>
+                     <a href="{% url 'post_new' %}" >New Post</a>
+                </li>
+                <li>
+                  <a href="{% url 'post_draft_list' %}">Drafts</a>
+                </li>
+              <li>
+                  <a href="{% url 'my_posts' %}">My Posts</a>
+                </li>
+              <li>
+                  <a href="{% url 'user_logout' %}">Logout</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">Welcome, {{user.username}}</a>
+              </li>
+
+          {% else %}
+              <li>
+                  <a href="{% url 'signup' %}">Register</a>
+              </li>
+              <li>
+                  <a href="{% url 'signin' %}">Login</a>
+              </li>
+          {% endif %}
+
+      </ul>
+
+
+
+
+
+
+
+
+  </div>
+</nav>
+
+  {# The actual blog posts#}
+        <div class="content container">
+            <div class="row">
+                <div class="col-md-8">
+                  <div class="blog_posts">
+                    {% block content %}
+                    {% endblock %}
+
+                  </div>
+
+                </div>
+            </div>
+        </div>
+
+{# SCRIPTS#}
+
+<script type="text/javascript" src="{% static 'js/blog.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

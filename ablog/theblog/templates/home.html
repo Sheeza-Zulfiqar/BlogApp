@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="centerstage">
+
+
+    {% for post in object_list %}
+        <div class="post">
+
+            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a> by -{{post.author.username}}</h1>
+            <div class="date">
+                <p>Published on: {{ post.published_date|date:"D M Y"}}</p>
+            </div>
+            <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approve_comments.count }}</a> |
+             {% if user.is_authenticated and not request.user.is_superuser %}
+                    {% if user.id == post.author.id %}
+                        <small> <a href="{% url 'update_post' pk=post.pk %}">(Edit)</a>
+                            <a href="{% url 'delete_post' pk=post.pk %}">(Delete)</a>
+                        </small>
+                    {% endif %}
+            {% elif user.is_authenticated and request.user.is_superuser %}
+                    <small>
+                        <a href="{% url 'delete_post' pk=post.pk %}">(Delete)</a>
+                    </small>
+
+            {% endif %}
+
+        </div>
+    {{ post.text|safe|slice:":200" }}
+    {% endfor %}
+</div>
+{% endblock %}

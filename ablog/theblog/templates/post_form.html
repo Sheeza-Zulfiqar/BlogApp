@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>New post</h1>
+{% if user.is_authenticated %}
+<div class="form-group">
+        <form method="POST" class="post-form">
+    {% csrf_token %}
+    {{form.media}}
+    {{form.as_p}}
+    <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+</div>
+<script>
+    var name="{{ user.id }}";
+    document.getElementById("user").value=name;
+</script>
+{% else %}
+You're not allowed here!
+{% endif %}
+    <script>var editor = new MediumEditor('.editable');</script>
+
+{% endblock %}

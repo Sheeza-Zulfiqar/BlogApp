@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for post in all_search_results %}
+        <h3>{{post.title}}</h3>
+        <p>{{post.text|safe}}</p>
+    {% empty %}
+        <h2>No results found</h2>
+    {% endfor %}
+{% endblock %}

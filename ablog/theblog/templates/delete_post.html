@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated and not request.user.is_superuser %}
+    {% if user.id == post.author.id %}
+
+            <h1>Delete post</h1>
+        <h3>{{ post.title }}</h3>
+        <br>
+        <div class="form-group">
+                <form method="POST" class="post-form">
+            {% csrf_token %}
+            <strong>Are you sure ? </strong><br><br>
+            <button type="submit" class="save btn btn-default">Delete</button>
+            </form>
+        </div>
+    {% else %}
+        you're not allowed here
+    {% endif %}
+{% elif user.is_authenticated and request.user.is_superuser %}
+    <h1>Delete post</h1>
+        <h3>{{ post.title }}</h3>
+        <br>
+        <div class="form-group">
+                <form method="POST" class="post-form">
+            {% csrf_token %}
+            <strong>Are you sure ? </strong><br><br>
+            <button type="submit" class="save btn btn-default">Delete</button>
+            </form>
+        </div>
+
+
+    <script>var editor = new MediumEditor('.editable');</script>
+{% else %}
+you're not allowed
+{% endif %}
+{% endblock %}

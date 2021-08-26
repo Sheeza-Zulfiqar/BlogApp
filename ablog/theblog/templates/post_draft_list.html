@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    {% for post in draft_posts %}
+        <div class="post">
+            <p class="date">created: {{ post.create_date|date:'d-m-Y' }}</p>
+            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+            <p>{{ post.text | safe }}</p>
+        </div>
+    {% endfor %}
+
+{% else %}
+you are not allowed here
+{% endif %}
+{% endblock %}

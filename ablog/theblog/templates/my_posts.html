@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="centerstage">
+
+    <form class="add_your_class" method="GET" action="{% url 'search' %}" >
+    <input class="add_your_class" type="search" name="search">
+    <button class="add_your_class" type="submit"> Search </button>
+    </form>
+
+
+    {% for post in all_posts %}
+        <div class="post">
+
+            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a> by -{{post.author.username}}</h1>
+            <div class="date">
+                <p>Published on: {{ post.published_date|date:"D M Y"}}</p>
+            </div>
+            <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approve_comments.count }}</a> |
+             {% if user.is_authenticated %}
+                    {% if user.id == post.author.id %}
+                        <small> <a href="{% url 'update_post' pk=post.pk %}">(Edit)</a>
+                            <a href="{% url 'delete_post' pk=post.pk %}">(Delete)</a>
+                        </small>
+                    {% endif %}
+            {% endif %}
+        </div>
+    {{ post.text|safe|slice:":200" }}
+    {% endfor %}
+</div>
+{% endblock %}
