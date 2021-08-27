@@ -30,7 +30,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('theblog.urls')),
     path('api/v1/',include('api.urls')),
-    path('api/v1/posts',),
     # path('api/v2/',include(router.urls)),
     # django authenticaion  system and it has lot of pkgz in urls that take care of urls so login logout register page
     # path('members/',include('django.contrib.auth.urls')),
